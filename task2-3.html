@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>task2-3</title>
+</head>
+<body>
+	<ul id="source">
+		<li>北京空气质量：<b>90</b></li>
+		<li>上海空气质量：<b>70</b></li>
+		<li>天津空气质量：<b>80</b></li>
+		<li>广州空气质量：<b>50</b></li>
+		<li>深圳空气质量：<b>40</b></li>
+		<li>福州空气质量：<b>32</b></li>
+		<li>成都空气质量：<b>90</b></li>
+	</ul>
+	<ul id="resort"></ul>
+	<button id="sortButton">排序</button>
+	<script type="text/javascript">
+		function getAirData(){
+			var airData=[];
+			var data=document.querySelectorAll("#source li");
+			for (var i = 0; i < data.length; i++) {
+				airData.push(data[i].innerHTML.replace(/(.*)空气质量：<b>(.*)<\/b>/g, '$1 $2').split(' '));
+			};
+			console.log(airData);
+			return airData;
+		}
+		
+		function sortAirData(data){
+			return data.sort(function(a, b) {
+				return parseInt(a[1]) < parseInt(b[1]);
+			});
+		}
+		function showSortData(data){
+			data.forEach(function(city){
+				var li=document.createElement('li');
+				document.getElementById('resort').appendChild(li);
+				li.innerHTML="<li>"+city[0]+"空气质量："+city[1]+"</li>";
+			});
+		}
+		function buttonClick(){
+			var data=getAirData();
+			sortAirData(data);
+			showSortData(data);
+		}
+		function init(){
+			document.getElementById('sortButton').addEventListener('click', buttonClick);
+		}
+		init();
+
+	</script>
+</body>
+</html>
